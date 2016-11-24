@@ -1,5 +1,6 @@
 import socket
 import os
+import sys
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('0.0.0.0', 2222))
@@ -11,7 +12,11 @@ while True:
             data = conn.recv(1024)
             if data.decode('utf8').strip() == 'close':
                 conn.close()
+                sys.exit()
             else:
                 conn.send(data)
                 conn.close()
+                sys.exit()
+        else:
+            conn.close()
 s.close()
